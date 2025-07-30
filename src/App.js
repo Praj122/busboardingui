@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Signup from './Signup';
+import Login from './Login';
+import Booking from './Booking';
+import Sequence from './Sequence';
+import BoardingSequence from './BoardingSequence';
 
 function App() {
+  const [username, setUsername] = useState('');
+  const [page, setPage] = useState('login');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ padding: '20px', fontFamily: 'Arial' }}>
+      <h2>🚌 Bus Boarding Sequence Generator</h2>
+
+      {username && <p>Welcome, <b>{username}</b>!</p>}
+
+      {!username && page === 'login' && <Login setUsername={setUsername} setPage={setPage} />}
+      {!username && page === 'signup' && <Signup setPage={setPage} />}
+
+      {username && <>
+        <Booking username={username} />
+        <hr />
+        <Sequence />
+        <BoardingSequence></BoardingSequence>
+      </>}
     </div>
   );
 }
